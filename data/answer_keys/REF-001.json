@@ -1,0 +1,140 @@
+{
+  "story_id": "REF-001",
+  "scenarios": [
+    {
+      "id": "REF-001-S01",
+      "category": "positive",
+      "area": "happy-path",
+      "description": "Full refund for a Delivered order inside the window is processed and the order becomes Refunded",
+      "match": [
+        [
+          "full refund"
+        ],
+        [
+          "refunded",
+          "processed",
+          "success"
+        ]
+      ]
+    },
+    {
+      "id": "REF-001-S02",
+      "category": "boundary",
+      "area": "return-window",
+      "description": "Request on day 30 after delivery is accepted",
+      "match": [
+        [
+          "day 30",
+          "30th day",
+          "30 days after"
+        ]
+      ]
+    },
+    {
+      "id": "REF-001-S03",
+      "category": "boundary",
+      "area": "return-window",
+      "description": "Request on day 31 after delivery is rejected with 'Return window has closed'",
+      "match": [
+        [
+          "day 31",
+          "31 days",
+          "31st day"
+        ]
+      ]
+    },
+    {
+      "id": "REF-001-S04",
+      "category": "negative",
+      "area": "order-status",
+      "description": "Order that is not yet delivered (Pending/Shipped) cannot be refunded",
+      "match": [
+        [
+          "pending",
+          "shipped",
+          "not delivered",
+          "not yet delivered",
+          "in transit"
+        ]
+      ]
+    },
+    {
+      "id": "REF-001-S05",
+      "category": "negative",
+      "area": "order-status",
+      "description": "Cancelled order cannot be refunded",
+      "match": [
+        [
+          "cancelled",
+          "canceled"
+        ]
+      ]
+    },
+    {
+      "id": "REF-001-S06",
+      "category": "positive",
+      "area": "notification",
+      "description": "Confirmation email shows the refund amount",
+      "match": [
+        [
+          "email"
+        ]
+      ]
+    },
+    {
+      "id": "REF-001-S07",
+      "category": "positive",
+      "area": "payment-method",
+      "description": "Refund goes to the original payment method",
+      "match": [
+        [
+          "original payment",
+          "same card",
+          "original card",
+          "visa"
+        ]
+      ]
+    },
+    {
+      "id": "REF-001-S08",
+      "category": "negative",
+      "area": "idempotency",
+      "description": "Repeated request with the same request ID does not refund twice",
+      "match": [
+        [
+          "duplicate",
+          "twice",
+          "double",
+          "same request id",
+          "idempotent"
+        ]
+      ]
+    },
+    {
+      "id": "REF-001-S09",
+      "category": "security",
+      "area": "permissions",
+      "description": "Customer cannot refund another customer's order",
+      "match": [
+        [
+          "another customer",
+          "other customer",
+          "someone else",
+          "does not own",
+          "not their own"
+        ]
+      ]
+    },
+    {
+      "id": "REF-001-S10",
+      "category": "audit",
+      "area": "audit",
+      "description": "Refund writes an audit log entry",
+      "match": [
+        [
+          "audit"
+        ]
+      ]
+    }
+  ]
+}

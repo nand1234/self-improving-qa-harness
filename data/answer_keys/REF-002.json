@@ -1,0 +1,155 @@
+{
+  "story_id": "REF-002",
+  "scenarios": [
+    {
+      "id": "REF-002-S01",
+      "category": "positive",
+      "area": "happy-path",
+      "description": "Partial refund of a single item",
+      "match": [
+        [
+          "partial"
+        ],
+        [
+          "one item",
+          "single item",
+          "one t-shirt",
+          "1 t-shirt",
+          "1 × t-shirt",
+          "1 x t-shirt"
+        ]
+      ]
+    },
+    {
+      "id": "REF-002-S02",
+      "category": "positive",
+      "area": "happy-path",
+      "description": "Partial refund of several items in one request",
+      "match": [
+        [
+          "multiple items",
+          "two items",
+          "2 items",
+          "several items",
+          "and the jacket",
+          "both items"
+        ]
+      ]
+    },
+    {
+      "id": "REF-002-S03",
+      "category": "positive",
+      "area": "order-status",
+      "description": "Order status becomes Partially Refunded",
+      "match": [
+        [
+          "partially refunded"
+        ]
+      ]
+    },
+    {
+      "id": "REF-002-S04",
+      "category": "boundary",
+      "area": "order-status",
+      "description": "Refunding the last remaining item sets status to Refunded",
+      "match": [
+        [
+          "last item",
+          "all items",
+          "every item",
+          "remaining item"
+        ],
+        [
+          "refunded"
+        ]
+      ]
+    },
+    {
+      "id": "REF-002-S05",
+      "category": "negative",
+      "area": "quantity",
+      "description": "Quantity greater than purchased is rejected",
+      "match": [
+        [
+          "quantity"
+        ],
+        [
+          "more than",
+          "greater than",
+          "exceed"
+        ]
+      ]
+    },
+    {
+      "id": "REF-002-S06",
+      "category": "boundary",
+      "area": "quantity",
+      "description": "Quantity of zero is rejected",
+      "match": [
+        [
+          "quantity 0",
+          "zero quantity",
+          "quantity of 0",
+          "qty 0",
+          "quantity = 0",
+          "0 × ",
+          "0 x "
+        ]
+      ]
+    },
+    {
+      "id": "REF-002-S07",
+      "category": "negative",
+      "area": "idempotency",
+      "description": "Item that is already refunded cannot be refunded again",
+      "match": [
+        [
+          "already refunded",
+          "refunded again",
+          "second time"
+        ]
+      ]
+    },
+    {
+      "id": "REF-002-S08",
+      "category": "data-integrity",
+      "area": "refund-cap",
+      "description": "Total refunds can never exceed the amount paid",
+      "match": [
+        [
+          "exceed"
+        ],
+        [
+          "paid",
+          "order total"
+        ]
+      ]
+    },
+    {
+      "id": "REF-002-S09",
+      "category": "data-integrity",
+      "area": "rounding",
+      "description": "Amounts use 2 decimals and round correctly",
+      "match": [
+        [
+          "decimal",
+          "rounding",
+          "round half",
+          "to the cent",
+          "€0.01"
+        ]
+      ]
+    },
+    {
+      "id": "REF-002-S10",
+      "category": "audit",
+      "area": "audit",
+      "description": "Partial refund writes an audit log entry",
+      "match": [
+        [
+          "audit"
+        ]
+      ]
+    }
+  ]
+}

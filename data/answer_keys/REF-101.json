@@ -1,0 +1,168 @@
+{
+  "story_id": "REF-101",
+  "scenarios": [
+    {
+      "id": "REF-101-S01",
+      "category": "positive",
+      "area": "happy-path",
+      "description": "Damaged item reported with one photo is refunded",
+      "match": [
+        [
+          "1 photo",
+          "one photo",
+          "single photo"
+        ]
+      ]
+    },
+    {
+      "id": "REF-101-S02",
+      "category": "boundary",
+      "area": "attachments",
+      "description": "Claim with 5 photos is accepted",
+      "match": [
+        [
+          "5 photos",
+          "five photos"
+        ]
+      ]
+    },
+    {
+      "id": "REF-101-S03",
+      "category": "boundary",
+      "area": "attachments",
+      "description": "Claim with 6 photos is rejected",
+      "match": [
+        [
+          "6 photos",
+          "six photos",
+          "more than 5",
+          "more than five"
+        ]
+      ]
+    },
+    {
+      "id": "REF-101-S04",
+      "category": "negative",
+      "area": "attachments",
+      "description": "Claim without any photo is rejected",
+      "match": [
+        [
+          "no photo",
+          "without photo",
+          "without a photo",
+          "0 photos",
+          "zero photos",
+          "missing photo"
+        ]
+      ]
+    },
+    {
+      "id": "REF-101-S05",
+      "category": "negative",
+      "area": "attachments",
+      "description": "Unsupported file type is rejected",
+      "match": [
+        [
+          "gif",
+          "pdf",
+          "bmp",
+          "file type",
+          "unsupported format",
+          "heic"
+        ]
+      ]
+    },
+    {
+      "id": "REF-101-S06",
+      "category": "boundary",
+      "area": "attachments",
+      "description": "Photo larger than 10 MB is rejected",
+      "match": [
+        [
+          "10 mb",
+          "10.1 mb",
+          "11 mb",
+          "larger than",
+          "over 10"
+        ]
+      ]
+    },
+    {
+      "id": "REF-101-S07",
+      "category": "boundary",
+      "area": "return-window",
+      "description": "Damage report on day 31 is rejected (day 30 accepted)",
+      "match": [
+        [
+          "day 31",
+          "31 days",
+          "day 30"
+        ]
+      ]
+    },
+    {
+      "id": "REF-101-S08",
+      "category": "negative",
+      "area": "idempotency",
+      "description": "Same item cannot be reported as damaged twice",
+      "match": [
+        [
+          "twice",
+          "second time",
+          "duplicate",
+          "already reported"
+        ]
+      ]
+    },
+    {
+      "id": "REF-101-S09",
+      "category": "positive",
+      "area": "happy-path",
+      "description": "Refund is issued without returning the item",
+      "match": [
+        [
+          "without returning",
+          "no return",
+          "not required to return",
+          "keep the item"
+        ]
+      ]
+    },
+    {
+      "id": "REF-101-S10",
+      "category": "boundary",
+      "area": "approval-threshold",
+      "description": "Damaged item above €500.00 goes to Pending Approval",
+      "match": [
+        [
+          "500"
+        ]
+      ]
+    },
+    {
+      "id": "REF-101-S11",
+      "category": "audit",
+      "area": "audit",
+      "description": "Claim and refund write audit log entries",
+      "match": [
+        [
+          "audit"
+        ]
+      ]
+    },
+    {
+      "id": "REF-101-S12",
+      "category": "positive",
+      "area": "visibility",
+      "description": "Support staff can see the claim photos",
+      "match": [
+        [
+          "support"
+        ],
+        [
+          "photo"
+        ]
+      ]
+    }
+  ]
+}

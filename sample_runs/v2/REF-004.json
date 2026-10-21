@@ -1,0 +1,95 @@
+{
+  "story_id": "REF-004",
+  "test_cases": [
+    {
+      "id": "TC-01",
+      "title": "Order paid by card only is refunded to the same card",
+      "type": "positive",
+      "preconditions": "Order paid by card (Mastercard), €100.00",
+      "steps": [
+        "Request full refund"
+      ],
+      "expected": "€100.00 refunded to the same Mastercard"
+    },
+    {
+      "id": "TC-02",
+      "title": "Order paid entirely by gift card is refunded as a new gift card",
+      "type": "positive",
+      "preconditions": "Order €80.00 paid entirely by gift card",
+      "steps": [
+        "Request full refund"
+      ],
+      "expected": "New gift card of €80.00 issued"
+    },
+    {
+      "id": "TC-03",
+      "title": "Split payment full refund",
+      "type": "positive",
+      "preconditions": "Order #40102: €50.00 gift card and €100.00 Mastercard (split)",
+      "steps": [
+        "Request full refund"
+      ],
+      "expected": "€50.00 as a new gift card, €100.00 to the Mastercard"
+    },
+    {
+      "id": "TC-04",
+      "title": "Original card expired: refund goes to store credit",
+      "type": "negative",
+      "preconditions": "Card used for the order has expired",
+      "steps": [
+        "Request full refund"
+      ],
+      "expected": "Refund issued as store credit; customer is notified"
+    },
+    {
+      "id": "TC-05",
+      "title": "Payment provider failure: refund stays Failed and can be retried",
+      "type": "integration",
+      "preconditions": "Payment provider times out",
+      "steps": [
+        "Request full refund"
+      ],
+      "expected": "Status Failed; retry possible; no money moved"
+    },
+    {
+      "id": "TC-06",
+      "title": "Confirmation shows a breakdown per payment method",
+      "type": "positive",
+      "preconditions": "Split refund processed for #40102",
+      "steps": [
+        "Open refund confirmation"
+      ],
+      "expected": "Breakdown: gift card €50.00, Mastercard €100.00"
+    },
+    {
+      "id": "TC-07",
+      "title": "Split amounts are rounded to the cent and add up to the refund total",
+      "type": "data-integrity",
+      "preconditions": "Order €99.99: €33.33 gift card + €66.66 card",
+      "steps": [
+        "Request full refund"
+      ],
+      "expected": "Amounts per method have 2 decimals and add up to €99.99"
+    },
+    {
+      "id": "TC-08",
+      "title": "Refund cannot exceed the amount paid",
+      "type": "data-integrity",
+      "preconditions": "€150.00 paid, €100.00 already refunded",
+      "steps": [
+        "Request €60.00 refund via API"
+      ],
+      "expected": "Rejected: would exceed amount paid"
+    },
+    {
+      "id": "TC-09",
+      "title": "Refund writes an audit log entry",
+      "type": "audit",
+      "preconditions": "Split refund processed",
+      "steps": [
+        "Open the audit log"
+      ],
+      "expected": "Entry with amounts per payment method"
+    }
+  ]
+}

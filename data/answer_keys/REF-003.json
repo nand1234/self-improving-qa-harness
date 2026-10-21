@@ -1,0 +1,145 @@
+{
+  "story_id": "REF-003",
+  "scenarios": [
+    {
+      "id": "REF-003-S01",
+      "category": "boundary",
+      "area": "approval-threshold",
+      "description": "Refund of €500.01 goes to Pending Approval",
+      "match": [
+        [
+          "500.01"
+        ]
+      ]
+    },
+    {
+      "id": "REF-003-S02",
+      "category": "boundary",
+      "area": "approval-threshold",
+      "description": "Refund of exactly €500.00 is processed without approval",
+      "match": [
+        [
+          "exactly €500.00",
+          "exactly 500",
+          "€500.00 exactly",
+          "refund of €500.00"
+        ]
+      ]
+    },
+    {
+      "id": "REF-003-S03",
+      "category": "boundary",
+      "area": "approval-threshold",
+      "description": "Refund of €499.99 is processed immediately",
+      "match": [
+        [
+          "499.99"
+        ]
+      ]
+    },
+    {
+      "id": "REF-003-S04",
+      "category": "positive",
+      "area": "approval-flow",
+      "description": "Manager approves a pending refund and it is processed",
+      "match": [
+        [
+          "manager"
+        ],
+        [
+          "approve"
+        ]
+      ]
+    },
+    {
+      "id": "REF-003-S05",
+      "category": "negative",
+      "area": "approval-flow",
+      "description": "Manager rejects with a reason and the refund is closed",
+      "match": [
+        [
+          "reject"
+        ],
+        [
+          "reason"
+        ]
+      ]
+    },
+    {
+      "id": "REF-003-S06",
+      "category": "negative",
+      "area": "validation",
+      "description": "Rejecting without a reason is not allowed",
+      "match": [
+        [
+          "without a reason",
+          "no reason",
+          "empty reason",
+          "missing reason",
+          "reason is required",
+          "blank reason"
+        ]
+      ]
+    },
+    {
+      "id": "REF-003-S07",
+      "category": "security",
+      "area": "permissions",
+      "description": "A non-manager cannot approve a refund",
+      "match": [
+        [
+          "support agent",
+          "non-manager",
+          "without manager role",
+          "customer"
+        ],
+        [
+          "cannot approve",
+          "not able to approve",
+          "can't approve",
+          "not available",
+          "denied",
+          "forbidden",
+          "403"
+        ]
+      ]
+    },
+    {
+      "id": "REF-003-S08",
+      "category": "positive",
+      "area": "notification",
+      "description": "Customer is notified of the outcome",
+      "match": [
+        [
+          "email",
+          "notif"
+        ]
+      ]
+    },
+    {
+      "id": "REF-003-S09",
+      "category": "audit",
+      "area": "audit",
+      "description": "Approval and rejection are written to the audit log",
+      "match": [
+        [
+          "audit"
+        ]
+      ]
+    },
+    {
+      "id": "REF-003-S10",
+      "category": "negative",
+      "area": "idempotency",
+      "description": "Approving twice does not refund twice",
+      "match": [
+        [
+          "twice",
+          "double",
+          "duplicate",
+          "already approved"
+        ]
+      ]
+    }
+  ]
+}

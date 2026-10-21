@@ -1,0 +1,48 @@
+{
+  "story_id": "REF-002",
+  "test_cases": [
+    {
+      "id": "TC-01",
+      "title": "Partial refund of 1 × T-shirt",
+      "type": "positive",
+      "preconditions": "Order #20311 Delivered",
+      "steps": [
+        "Select 1 × T-shirt",
+        "Submit refund"
+      ],
+      "expected": "€15.00 refunded"
+    },
+    {
+      "id": "TC-02",
+      "title": "Refund 2 × T-shirt and the Jacket",
+      "type": "positive",
+      "preconditions": "Order #20311 Delivered",
+      "steps": [
+        "Select 2 × T-shirt and the Jacket",
+        "Submit refund"
+      ],
+      "expected": "€150.00 refunded"
+    },
+    {
+      "id": "TC-03",
+      "title": "Order status after a partial refund",
+      "type": "positive",
+      "preconditions": "1 × T-shirt refunded",
+      "steps": [
+        "Open order #20311"
+      ],
+      "expected": "Status is Partially Refunded"
+    },
+    {
+      "id": "TC-04",
+      "title": "Refund quantity 4 when 3 T-shirts were bought",
+      "type": "negative",
+      "preconditions": "Order #20311 Delivered",
+      "steps": [
+        "Select T-shirt, quantity 4",
+        "Submit refund"
+      ],
+      "expected": "Error: quantity is more than purchased"
+    }
+  ]
+}

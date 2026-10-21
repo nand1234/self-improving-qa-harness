@@ -1,0 +1,149 @@
+{
+  "story_id": "REF-004",
+  "scenarios": [
+    {
+      "id": "REF-004-S01",
+      "category": "positive",
+      "area": "payment-method",
+      "description": "Card-only order is refunded to the same card",
+      "match": [
+        [
+          "paid by card",
+          "card only",
+          "paid only by card",
+          "paid entirely by card"
+        ]
+      ]
+    },
+    {
+      "id": "REF-004-S02",
+      "category": "positive",
+      "area": "payment-method",
+      "description": "Gift-card-only order is refunded as a new gift card",
+      "match": [
+        [
+          "paid entirely by gift card",
+          "gift card only",
+          "fully paid with a gift card",
+          "paid only with a gift card"
+        ]
+      ]
+    },
+    {
+      "id": "REF-004-S03",
+      "category": "positive",
+      "area": "payment-method",
+      "description": "Split payment: gift card portion as new gift card, rest to card",
+      "match": [
+        [
+          "split",
+          "gift card and",
+          "and gift card",
+          "mixed payment"
+        ],
+        [
+          "new gift card"
+        ]
+      ]
+    },
+    {
+      "id": "REF-004-S04",
+      "category": "boundary",
+      "area": "payment-method",
+      "description": "Partial refund on a split payment refunds the card portion first",
+      "match": [
+        [
+          "partial"
+        ],
+        [
+          "card portion first",
+          "card first",
+          "card is refunded first"
+        ]
+      ]
+    },
+    {
+      "id": "REF-004-S05",
+      "category": "negative",
+      "area": "payment-method",
+      "description": "Expired or closed original card: refund goes to store credit",
+      "match": [
+        [
+          "expired",
+          "closed"
+        ]
+      ]
+    },
+    {
+      "id": "REF-004-S06",
+      "category": "integration",
+      "area": "provider-failure",
+      "description": "Payment provider failure leaves the refund Failed and retryable",
+      "match": [
+        [
+          "payment provider",
+          "gateway",
+          "processor",
+          "psp"
+        ],
+        [
+          "fail",
+          "error",
+          "timeout",
+          "unavailable"
+        ]
+      ]
+    },
+    {
+      "id": "REF-004-S07",
+      "category": "positive",
+      "area": "notification",
+      "description": "Confirmation shows the amount per payment method",
+      "match": [
+        [
+          "breakdown",
+          "each payment method",
+          "each method",
+          "per method"
+        ]
+      ]
+    },
+    {
+      "id": "REF-004-S08",
+      "category": "data-integrity",
+      "area": "rounding",
+      "description": "Split amounts are rounded to the cent and add up",
+      "match": [
+        [
+          "decimal",
+          "rounding",
+          "round half",
+          "to the cent",
+          "€0.01"
+        ]
+      ]
+    },
+    {
+      "id": "REF-004-S09",
+      "category": "data-integrity",
+      "area": "refund-cap",
+      "description": "Refund cannot exceed the amount paid",
+      "match": [
+        [
+          "exceed"
+        ]
+      ]
+    },
+    {
+      "id": "REF-004-S10",
+      "category": "audit",
+      "area": "audit",
+      "description": "Refund writes an audit log entry",
+      "match": [
+        [
+          "audit"
+        ]
+      ]
+    }
+  ]
+}

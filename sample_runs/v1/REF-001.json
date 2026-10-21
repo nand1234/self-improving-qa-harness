@@ -1,0 +1,48 @@
+{
+  "story_id": "REF-001",
+  "test_cases": [
+    {
+      "id": "TC-01",
+      "title": "Full refund for a delivered order is processed",
+      "type": "positive",
+      "preconditions": "Order #10045 Delivered, €89.90, paid by Visa",
+      "steps": [
+        "Open order #10045",
+        "Click 'Request refund'",
+        "Confirm full refund"
+      ],
+      "expected": "Full refund of €89.90 is processed to the original payment method"
+    },
+    {
+      "id": "TC-02",
+      "title": "Refund request after the return window is rejected",
+      "type": "negative",
+      "preconditions": "Order delivered 45 days ago",
+      "steps": [
+        "Open the order",
+        "Request a full refund"
+      ],
+      "expected": "Request rejected with 'Return window has closed'"
+    },
+    {
+      "id": "TC-03",
+      "title": "Customer receives a confirmation email",
+      "type": "positive",
+      "preconditions": "Refund processed for order #10045",
+      "steps": [
+        "Check the customer's inbox"
+      ],
+      "expected": "Email shows refund amount €89.90"
+    },
+    {
+      "id": "TC-04",
+      "title": "Order status changes after refund",
+      "type": "positive",
+      "preconditions": "Refund processed for order #10045",
+      "steps": [
+        "Open order #10045"
+      ],
+      "expected": "Order status is Refunded"
+    }
+  ]
+}

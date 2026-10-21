@@ -1,0 +1,100 @@
+{
+  "story_id": "REF-002",
+  "test_cases": [
+    {
+      "id": "TC-01",
+      "title": "Partial refund of 1 × T-shirt",
+      "type": "positive",
+      "preconditions": "Order #20311 Delivered: 3 × T-shirt €15.00, 1 × Jacket €120.00",
+      "steps": [
+        "Select 1 × T-shirt",
+        "Submit refund"
+      ],
+      "expected": "€15.00 refunded; status Partially Refunded; other items unaffected"
+    },
+    {
+      "id": "TC-02",
+      "title": "Partial refund of 2 × T-shirt and the Jacket in one request",
+      "type": "positive",
+      "preconditions": "Order #20311 Delivered",
+      "steps": [
+        "Select 2 × T-shirt and the Jacket",
+        "Submit refund"
+      ],
+      "expected": "€150.00 refunded in one refund"
+    },
+    {
+      "id": "TC-03",
+      "title": "Refunding the last remaining item sets status to Refunded",
+      "type": "boundary",
+      "preconditions": "Only 1 × T-shirt left unrefunded",
+      "steps": [
+        "Refund the last remaining item"
+      ],
+      "expected": "Order status changes from Partially Refunded to Refunded"
+    },
+    {
+      "id": "TC-04",
+      "title": "Quantity greater than purchased is rejected",
+      "type": "negative",
+      "preconditions": "Order #20311 Delivered",
+      "steps": [
+        "Select T-shirt with quantity 4 (3 bought)",
+        "Submit refund"
+      ],
+      "expected": "Validation error; no refund"
+    },
+    {
+      "id": "TC-05",
+      "title": "Item that is already refunded cannot be refunded again",
+      "type": "negative",
+      "preconditions": "Jacket already refunded",
+      "steps": [
+        "Select the Jacket",
+        "Submit refund"
+      ],
+      "expected": "Jacket is not selectable; API rejects the request"
+    },
+    {
+      "id": "TC-06",
+      "title": "Total refunds cannot exceed the amount paid",
+      "type": "data-integrity",
+      "preconditions": "€135.00 already refunded on #20311 (paid €165.00)",
+      "steps": [
+        "Request a refund of €45.00 via API"
+      ],
+      "expected": "Rejected: total would exceed amount paid"
+    },
+    {
+      "id": "TC-07",
+      "title": "Refund amounts use 2 decimals and round half up to the cent",
+      "type": "data-integrity",
+      "preconditions": "Unit price paid €14.995 after discount",
+      "steps": [
+        "Refund 1 item"
+      ],
+      "expected": "€15.00 refunded (2 decimals)"
+    },
+    {
+      "id": "TC-08",
+      "title": "Partial refund writes an audit log entry",
+      "type": "audit",
+      "preconditions": "Partial refund processed",
+      "steps": [
+        "Open the audit log"
+      ],
+      "expected": "Entry with items, quantities, amount and who did it"
+    },
+    {
+      "id": "TC-09",
+      "title": "Partial refund on a Cancelled order is rejected",
+      "type": "negative",
+      "preconditions": "Order status Cancelled",
+      "steps": [
+        "Select an item",
+        "Submit refund"
+      ],
+      "expected": "Request rejected"
+    }
+  ]
+}

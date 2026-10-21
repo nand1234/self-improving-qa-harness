@@ -1,0 +1,48 @@
+{
+  "story_id": "REF-102",
+  "test_cases": [
+    {
+      "id": "TC-01",
+      "title": "Refund 10 delivered orders in one action",
+      "type": "positive",
+      "preconditions": "10 Delivered orders",
+      "steps": [
+        "Log in as Support Agent",
+        "Select 10 orders",
+        "Click 'Refund selected'"
+      ],
+      "expected": "Summary shows 10 succeeded"
+    },
+    {
+      "id": "TC-02",
+      "title": "Order that is not delivered is skipped",
+      "type": "negative",
+      "preconditions": "Selection contains a Shipped order",
+      "steps": [
+        "Run bulk refund"
+      ],
+      "expected": "That order is skipped"
+    },
+    {
+      "id": "TC-03",
+      "title": "Summary shows reason for each skipped order",
+      "type": "positive",
+      "preconditions": "Bulk run with skipped orders",
+      "steps": [
+        "Open summary"
+      ],
+      "expected": "Each skipped order has a reason"
+    },
+    {
+      "id": "TC-04",
+      "title": "Refund 50 orders at once",
+      "type": "positive",
+      "preconditions": "50 Delivered orders",
+      "steps": [
+        "Select 50 orders",
+        "Run bulk refund"
+      ],
+      "expected": "All 50 orders refunded"
+    }
+  ]
+}

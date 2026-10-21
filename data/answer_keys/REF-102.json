@@ -1,0 +1,166 @@
+{
+  "story_id": "REF-102",
+  "scenarios": [
+    {
+      "id": "REF-102-S01",
+      "category": "positive",
+      "area": "happy-path",
+      "description": "Bulk refund of eligible orders: summary shows all succeeded",
+      "match": [
+        [
+          "summary"
+        ],
+        [
+          "succeeded",
+          "success"
+        ]
+      ]
+    },
+    {
+      "id": "REF-102-S02",
+      "category": "boundary",
+      "area": "limits",
+      "description": "Bulk refund of 50 orders is accepted",
+      "match": [
+        [
+          "50 orders"
+        ]
+      ]
+    },
+    {
+      "id": "REF-102-S03",
+      "category": "boundary",
+      "area": "limits",
+      "description": "Selecting 51 orders is blocked",
+      "match": [
+        [
+          "51"
+        ]
+      ]
+    },
+    {
+      "id": "REF-102-S04",
+      "category": "boundary",
+      "area": "limits",
+      "description": "Bulk refund with a single order works",
+      "match": [
+        [
+          " 1 order",
+          "one order",
+          "single order"
+        ]
+      ]
+    },
+    {
+      "id": "REF-102-S05",
+      "category": "boundary",
+      "area": "limits",
+      "description": "Running with no orders selected is blocked",
+      "match": [
+        [
+          "zero orders",
+          "no orders",
+          "none selected",
+          "nothing selected",
+          "without selecting"
+        ]
+      ]
+    },
+    {
+      "id": "REF-102-S06",
+      "category": "negative",
+      "area": "order-status",
+      "description": "Ineligible orders are skipped, not refunded",
+      "match": [
+        [
+          "skip"
+        ]
+      ]
+    },
+    {
+      "id": "REF-102-S07",
+      "category": "integration",
+      "area": "provider-failure",
+      "description": "Payment provider failure on some orders is reported as failed",
+      "match": [
+        [
+          "fail"
+        ],
+        [
+          "payment provider",
+          "gateway",
+          "processor"
+        ]
+      ]
+    },
+    {
+      "id": "REF-102-S08",
+      "category": "boundary",
+      "area": "approval-threshold",
+      "description": "Order refund above €500.00 goes to Pending Approval",
+      "match": [
+        [
+          "500"
+        ]
+      ]
+    },
+    {
+      "id": "REF-102-S09",
+      "category": "security",
+      "area": "permissions",
+      "description": "Users without the Support Agent role cannot use bulk refund",
+      "match": [
+        [
+          "customer",
+          "non-agent",
+          "without support agent role",
+          "unauthori"
+        ],
+        [
+          "cannot",
+          "denied",
+          "forbidden",
+          "403",
+          "not allowed",
+          "no access"
+        ]
+      ]
+    },
+    {
+      "id": "REF-102-S10",
+      "category": "negative",
+      "area": "idempotency",
+      "description": "Submitting the same bulk run twice does not refund twice",
+      "match": [
+        [
+          "twice",
+          "duplicate",
+          "double",
+          "resubmit"
+        ]
+      ]
+    },
+    {
+      "id": "REF-102-S11",
+      "category": "audit",
+      "area": "audit",
+      "description": "Each refund and skip writes an audit log entry",
+      "match": [
+        [
+          "audit"
+        ]
+      ]
+    },
+    {
+      "id": "REF-102-S12",
+      "category": "positive",
+      "area": "notification",
+      "description": "Summary gives a reason for each skipped or failed order",
+      "match": [
+        [
+          "reason"
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "story_id": "REF-004",
+  "test_cases": [
+    {
+      "id": "TC-01",
+      "title": "Order paid by card is refunded to the card",
+      "type": "positive",
+      "preconditions": "Order paid by card with Mastercard, €100.00",
+      "steps": [
+        "Request full refund"
+      ],
+      "expected": "€100.00 refunded to the Mastercard"
+    },
+    {
+      "id": "TC-02",
+      "title": "Split payment refund",
+      "type": "positive",
+      "preconditions": "Order #40102: €50.00 gift card + €100.00 Mastercard",
+      "steps": [
+        "Request full refund"
+      ],
+      "expected": "€50.00 issued as a new gift card, €100.00 refunded to the Mastercard"
+    },
+    {
+      "id": "TC-03",
+      "title": "Confirmation shows amount for each method",
+      "type": "positive",
+      "preconditions": "Refund processed for #40102",
+      "steps": [
+        "Open refund confirmation"
+      ],
+      "expected": "Shows €50.00 gift card and €100.00 card - amount for each method"
+    },
+    {
+      "id": "TC-04",
+      "title": "Refund appears in refund history",
+      "type": "positive",
+      "preconditions": "Refund processed for #40102",
+      "steps": [
+        "Open 'My refunds'"
+      ],
+      "expected": "Refund is listed with status Refunded"
+    }
+  ]
+}

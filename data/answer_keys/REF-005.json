@@ -1,0 +1,140 @@
+{
+  "story_id": "REF-005",
+  "scenarios": [
+    {
+      "id": "REF-005-S01",
+      "category": "positive",
+      "area": "promo",
+      "description": "Percentage promo: refund equals the discounted price paid",
+      "match": [
+        [
+          "%",
+          "percent"
+        ]
+      ]
+    },
+    {
+      "id": "REF-005-S02",
+      "category": "positive",
+      "area": "promo",
+      "description": "Fixed-amount promo is prorated across items for partial refunds",
+      "match": [
+        [
+          "prorat",
+          "proportion",
+          "distributed",
+          "split across"
+        ]
+      ]
+    },
+    {
+      "id": "REF-005-S03",
+      "category": "negative",
+      "area": "promo",
+      "description": "Refund never uses the list price for discounted items",
+      "match": [
+        [
+          "list price",
+          "full price",
+          "original price",
+          "before discount",
+          "pre-discount"
+        ]
+      ]
+    },
+    {
+      "id": "REF-005-S04",
+      "category": "boundary",
+      "area": "promo",
+      "description": "Order with 100% discount: no €0.00 refund is created",
+      "match": [
+        [
+          "100%",
+          "€0.00",
+          "zero amount",
+          "free order"
+        ]
+      ]
+    },
+    {
+      "id": "REF-005-S05",
+      "category": "negative",
+      "area": "promo",
+      "description": "Promo code is not reinstated after a refund",
+      "match": [
+        [
+          "reinstat",
+          "reuse",
+          "re-use",
+          "used again",
+          "reactivat"
+        ]
+      ]
+    },
+    {
+      "id": "REF-005-S06",
+      "category": "data-integrity",
+      "area": "rounding",
+      "description": "Prorated amounts are rounded to the cent",
+      "match": [
+        [
+          "decimal",
+          "rounding",
+          "round half",
+          "to the cent",
+          "€0.01"
+        ]
+      ]
+    },
+    {
+      "id": "REF-005-S07",
+      "category": "data-integrity",
+      "area": "refund-cap",
+      "description": "Total refunds on a discounted order cannot exceed amount paid",
+      "match": [
+        [
+          "exceed"
+        ]
+      ]
+    },
+    {
+      "id": "REF-005-S08",
+      "category": "positive",
+      "area": "notification",
+      "description": "Confirmation shows the discount applied",
+      "match": [
+        [
+          "confirmation",
+          "email"
+        ],
+        [
+          "discount"
+        ]
+      ]
+    },
+    {
+      "id": "REF-005-S09",
+      "category": "positive",
+      "area": "happy-path",
+      "description": "Order without a promo code is refunded the normal price",
+      "match": [
+        [
+          "without a promo",
+          "no promo",
+          "without promo"
+        ]
+      ]
+    },
+    {
+      "id": "REF-005-S10",
+      "category": "audit",
+      "area": "audit",
+      "description": "Refund writes an audit log entry",
+      "match": [
+        [
+          "audit"
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "story_id": "REF-003",
+  "test_cases": [
+    {
+      "id": "TC-01",
+      "title": "Refund of €500.01 goes to Pending Approval",
+      "type": "boundary",
+      "preconditions": "Delivered order, item €500.01",
+      "steps": [
+        "Request a full refund"
+      ],
+      "expected": "Status Pending Approval; no money moved"
+    },
+    {
+      "id": "TC-02",
+      "title": "Refund of exactly €500.00 is processed without approval",
+      "type": "boundary",
+      "preconditions": "Delivered order, item €500.00",
+      "steps": [
+        "Request a full refund"
+      ],
+      "expected": "Processed immediately"
+    },
+    {
+      "id": "TC-03",
+      "title": "Refund of €499.99 is processed immediately",
+      "type": "boundary",
+      "preconditions": "Delivered order, item €499.99",
+      "steps": [
+        "Request a full refund"
+      ],
+      "expected": "Processed immediately"
+    },
+    {
+      "id": "TC-04",
+      "title": "Manager approves a pending refund",
+      "type": "positive",
+      "preconditions": "Refund for #30877 (€1,249.00) is Pending Approval",
+      "steps": [
+        "Log in as Manager",
+        "Approve the refund"
+      ],
+      "expected": "Refund is processed"
+    },
+    {
+      "id": "TC-05",
+      "title": "Manager rejects with a reason and the refund is closed",
+      "type": "negative",
+      "preconditions": "Refund for #30877 is Pending Approval",
+      "steps": [
+        "Log in as Manager",
+        "Reject with reason 'Item used'"
+      ],
+      "expected": "Refund closed; reason saved"
+    },
+    {
+      "id": "TC-06",
+      "title": "Support Agent cannot approve a pending refund",
+      "type": "security",
+      "preconditions": "Refund Pending Approval",
+      "steps": [
+        "Log in as Support Agent",
+        "Try to approve via UI and API"
+      ],
+      "expected": "Approve action not available; API returns 403"
+    },
+    {
+      "id": "TC-07",
+      "title": "Customer is emailed the outcome",
+      "type": "positive",
+      "preconditions": "Refund approved or rejected",
+      "steps": [
+        "Check the customer's inbox"
+      ],
+      "expected": "Email states approved or rejected (with reason)"
+    },
+    {
+      "id": "TC-08",
+      "title": "Approving an already approved refund does not refund twice",
+      "type": "negative",
+      "preconditions": "Refund already approved",
+      "steps": [
+        "Send approve request again"
+      ],
+      "expected": "No second refund; status unchanged"
+    },
+    {
+      "id": "TC-09",
+      "title": "Approval and rejection are written to the audit log",
+      "type": "audit",
+      "preconditions": "Refund approved",
+      "steps": [
+        "Open the audit log"
+      ],
+      "expected": "Entry with manager, time, amount and decision"
+    }
+  ]
+}

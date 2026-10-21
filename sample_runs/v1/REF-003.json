@@ -1,0 +1,47 @@
+{
+  "story_id": "REF-003",
+  "test_cases": [
+    {
+      "id": "TC-01",
+      "title": "Refund of €1,249.00 goes to Pending Approval",
+      "type": "positive",
+      "preconditions": "Order #30877 Delivered",
+      "steps": [
+        "Request full refund"
+      ],
+      "expected": "Refund status is Pending Approval"
+    },
+    {
+      "id": "TC-02",
+      "title": "Manager approves the refund",
+      "type": "positive",
+      "preconditions": "Refund for #30877 is Pending Approval",
+      "steps": [
+        "Log in as Manager",
+        "Approve the refund"
+      ],
+      "expected": "Refund is processed"
+    },
+    {
+      "id": "TC-03",
+      "title": "Manager rejects the refund with a reason",
+      "type": "negative",
+      "preconditions": "Refund for #30877 is Pending Approval",
+      "steps": [
+        "Log in as Manager",
+        "Reject with reason 'Item used'"
+      ],
+      "expected": "Refund is closed"
+    },
+    {
+      "id": "TC-04",
+      "title": "Customer is informed of the outcome",
+      "type": "positive",
+      "preconditions": "Refund approved",
+      "steps": [
+        "Check the customer's inbox"
+      ],
+      "expected": "Customer receives an email with the outcome"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "story_id": "REF-005",
+  "test_cases": [
+    {
+      "id": "TC-01",
+      "title": "Order with 20% promo code is refunded the price paid",
+      "type": "positive",
+      "preconditions": "Item €50.00 bought with 20% off code",
+      "steps": [
+        "Request full refund"
+      ],
+      "expected": "€40.00 refunded"
+    },
+    {
+      "id": "TC-02",
+      "title": "SAVE10 order full refund",
+      "type": "positive",
+      "preconditions": "Order #50290 with SAVE10",
+      "steps": [
+        "Request full refund"
+      ],
+      "expected": "€90.00 refunded"
+    },
+    {
+      "id": "TC-03",
+      "title": "Refund confirmation shows discount applied",
+      "type": "positive",
+      "preconditions": "Refund processed for #50290",
+      "steps": [
+        "Open refund confirmation"
+      ],
+      "expected": "Confirmation shows the €10.00 discount"
+    },
+    {
+      "id": "TC-04",
+      "title": "Order without a promo code is refunded the full item price",
+      "type": "positive",
+      "preconditions": "Item €60.00, no code",
+      "steps": [
+        "Request full refund"
+      ],
+      "expected": "€60.00 refunded"
+    }
+  ]
+}

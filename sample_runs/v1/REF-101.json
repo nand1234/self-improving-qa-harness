@@ -1,0 +1,50 @@
+{
+  "story_id": "REF-101",
+  "test_cases": [
+    {
+      "id": "TC-01",
+      "title": "Report damaged vase with one photo and get a refund",
+      "type": "positive",
+      "preconditions": "Order #60455 Delivered 5 days ago",
+      "steps": [
+        "Report vase as damaged",
+        "Upload one photo",
+        "Submit"
+      ],
+      "expected": "€75.00 refunded"
+    },
+    {
+      "id": "TC-02",
+      "title": "Upload 5 photos to a claim",
+      "type": "positive",
+      "preconditions": "Order #60455 Delivered",
+      "steps": [
+        "Report damage",
+        "Upload 5 photos",
+        "Submit"
+      ],
+      "expected": "Claim is accepted"
+    },
+    {
+      "id": "TC-03",
+      "title": "Refund issued without returning the item",
+      "type": "positive",
+      "preconditions": "Damage claim accepted",
+      "steps": [
+        "Check claim details"
+      ],
+      "expected": "No return label requested; customer can keep the item"
+    },
+    {
+      "id": "TC-04",
+      "title": "Support can view photos in the claim",
+      "type": "positive",
+      "preconditions": "Damage claim submitted",
+      "steps": [
+        "Log in as Support",
+        "Open the claim"
+      ],
+      "expected": "All uploaded photos are visible"
+    }
+  ]
+}

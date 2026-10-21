@@ -1,0 +1,99 @@
+{
+  "story_id": "REF-102",
+  "test_cases": [
+    {
+      "id": "TC-01",
+      "title": "Bulk refund of 10 eligible orders: summary shows all succeeded",
+      "type": "positive",
+      "preconditions": "10 Delivered orders",
+      "steps": [
+        "Log in as Support Agent",
+        "Select 10 orders",
+        "Run bulk refund"
+      ],
+      "expected": "Summary: 10 succeeded, 0 skipped, 0 failed"
+    },
+    {
+      "id": "TC-02",
+      "title": "Bulk refund with 50 orders is accepted",
+      "type": "boundary",
+      "preconditions": "50 Delivered orders",
+      "steps": [
+        "Select 50 orders",
+        "Run bulk refund"
+      ],
+      "expected": "All processed"
+    },
+    {
+      "id": "TC-03",
+      "title": "Selecting 51 orders is blocked",
+      "type": "boundary",
+      "preconditions": "51 Delivered orders",
+      "steps": [
+        "Try to select 51 orders"
+      ],
+      "expected": "Run button disabled with a message"
+    },
+    {
+      "id": "TC-04",
+      "title": "Bulk refund with a single order works",
+      "type": "boundary",
+      "preconditions": "1 Delivered order",
+      "steps": [
+        "Select it",
+        "Run bulk refund"
+      ],
+      "expected": "Processed; summary shows 1 succeeded"
+    },
+    {
+      "id": "TC-05",
+      "title": "Ineligible orders are skipped with a reason",
+      "type": "negative",
+      "preconditions": "Selection has a Shipped order and one delivered 40 days ago",
+      "steps": [
+        "Run bulk refund"
+      ],
+      "expected": "Both skipped with a reason each; others refunded"
+    },
+    {
+      "id": "TC-06",
+      "title": "Payment provider failure on some orders",
+      "type": "integration",
+      "preconditions": "Payment provider errors for 2 of 10 orders",
+      "steps": [
+        "Run bulk refund"
+      ],
+      "expected": "Summary: 8 succeeded, 2 failed with reason; failed ones can be retried"
+    },
+    {
+      "id": "TC-07",
+      "title": "Order refund above €500.00 in a bulk run goes to Pending Approval",
+      "type": "boundary",
+      "preconditions": "Selection includes a €700.00 order",
+      "steps": [
+        "Run bulk refund"
+      ],
+      "expected": "That order is Pending Approval, not refunded yet"
+    },
+    {
+      "id": "TC-08",
+      "title": "Customer role cannot access bulk refund",
+      "type": "security",
+      "preconditions": "Logged in as a customer",
+      "steps": [
+        "Open bulk refund page or call the API"
+      ],
+      "expected": "403 Forbidden"
+    },
+    {
+      "id": "TC-09",
+      "title": "Each refund and skip writes an audit log entry",
+      "type": "audit",
+      "preconditions": "Bulk run finished",
+      "steps": [
+        "Open the audit log"
+      ],
+      "expected": "One entry per order with outcome"
+    }
+  ]
+}

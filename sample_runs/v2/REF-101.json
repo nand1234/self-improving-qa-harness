@@ -1,0 +1,108 @@
+{
+  "story_id": "REF-101",
+  "test_cases": [
+    {
+      "id": "TC-01",
+      "title": "Damaged item with one photo is refunded without returning the item",
+      "type": "positive",
+      "preconditions": "Order #60455 Delivered 5 days ago",
+      "steps": [
+        "Report the vase as damaged",
+        "Upload one photo (JPG)",
+        "Submit"
+      ],
+      "expected": "€75.00 refunded; customer is not asked to return the item"
+    },
+    {
+      "id": "TC-02",
+      "title": "Claim with 5 photos is accepted",
+      "type": "boundary",
+      "preconditions": "Order Delivered",
+      "steps": [
+        "Upload 5 photos",
+        "Submit"
+      ],
+      "expected": "Claim accepted"
+    },
+    {
+      "id": "TC-03",
+      "title": "Claim with 6 photos is rejected",
+      "type": "boundary",
+      "preconditions": "Order Delivered",
+      "steps": [
+        "Try to upload 6 photos"
+      ],
+      "expected": "Upload blocked with a clear message"
+    },
+    {
+      "id": "TC-04",
+      "title": "Claim without a photo is rejected",
+      "type": "negative",
+      "preconditions": "Order Delivered",
+      "steps": [
+        "Submit claim with no attachment"
+      ],
+      "expected": "Validation error: at least one photo required"
+    },
+    {
+      "id": "TC-05",
+      "title": "Unsupported file type (GIF) is rejected",
+      "type": "negative",
+      "preconditions": "Order Delivered",
+      "steps": [
+        "Upload a GIF"
+      ],
+      "expected": "Rejected: only JPG or PNG"
+    },
+    {
+      "id": "TC-06",
+      "title": "Photo larger than 10 MB is rejected",
+      "type": "boundary",
+      "preconditions": "Order Delivered",
+      "steps": [
+        "Upload a 10.1 MB JPG"
+      ],
+      "expected": "Rejected: max 10 MB per photo"
+    },
+    {
+      "id": "TC-07",
+      "title": "Damage reported on day 31 after delivery is rejected; day 30 is accepted",
+      "type": "boundary",
+      "preconditions": "Two orders delivered 30 and 31 days ago",
+      "steps": [
+        "Report damage on each"
+      ],
+      "expected": "Day 30 accepted; day 31 rejected"
+    },
+    {
+      "id": "TC-08",
+      "title": "Same item cannot be reported as damaged twice",
+      "type": "negative",
+      "preconditions": "Damage claim already accepted for the vase",
+      "steps": [
+        "Report the vase again"
+      ],
+      "expected": "Rejected: item already reported"
+    },
+    {
+      "id": "TC-09",
+      "title": "Damaged item worth €600.00 goes to Pending Approval",
+      "type": "boundary",
+      "preconditions": "Delivered item €600.00 (above €500.00)",
+      "steps": [
+        "Submit damage claim"
+      ],
+      "expected": "Refund status Pending Approval"
+    },
+    {
+      "id": "TC-10",
+      "title": "Claim and refund write audit log entries",
+      "type": "audit",
+      "preconditions": "Claim accepted",
+      "steps": [
+        "Open the audit log"
+      ],
+      "expected": "Entries for claim, decision and refund"
+    }
+  ]
+}

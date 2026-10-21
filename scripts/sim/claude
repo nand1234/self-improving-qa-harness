@@ -1,0 +1,34 @@
+#!/usr/bin/env python3
+"""OFFLINE SIMULATOR for the claude CLI - lets you watch the whole loop with no API calls.
+
+Use:  PATH="$PWD/scripts/sim:$PATH" python scripts/loop.py --harness harnesses/v1
+
+- As the AGENT it returns the matching file from sample_runs/: v2 output if the installed
+  harness has techniques.md, otherwise v1 output.
+- As the EDITOR it 'edits' the harness by copying in the v2 skill files and memory.
+Real improvements need the real claude CLI; this only demonstrates the mechanics.
+"""
+import re
+import shutil
+import sys
+from pathlib import Path
+
+REPO = Path(__file__).resolve().parents[2]
+prompt = sys.argv[sys.argv.index("-p") + 1] if "-p" in sys.argv else ""
+cwd = Path.cwd()
+
+if "harness editor" in prompt:
+    v2 = REPO / "harnesses" / "v2"
+    focus_domain = "DOMAIN focus" in prompt
+    shutil.copytree(v2 / "skills", cwd / "harness" / "skills", dirs_exist_ok=True)
+    if not focus_domain:
+        shutil.copytree(v2 / "agents", cwd / "harness" / "agents", dirs_exist_ok=True)
+        shutil.copytree(v2 / "agent-memory", cwd / "harness" / "agent-memory", dirs_exist_ok=True)
+    (cwd / "CHANGES.md").write_text("(simulated edit - copied v2 files)\n")
+    print("simulated editor done")
+else:
+    m = re.search(r"output/(REF-\d+)\.json", prompt)
+    version = "v2" if (cwd / ".claude/skills/test-case-creation/techniques.md").exists() else "v1"
+    src = REPO / "sample_runs" / version / f"{m.group(1)}.json"
+    shutil.copy(src, cwd / "output" / src.name)
+    print(f"simulated agent ({version}) wrote {src.name}")

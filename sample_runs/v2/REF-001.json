@@ -1,0 +1,107 @@
+{
+  "story_id": "REF-001",
+  "test_cases": [
+    {
+      "id": "TC-01",
+      "title": "Full refund on day 10 after delivery is processed",
+      "type": "positive",
+      "preconditions": "Order #10045 Delivered 10 days ago, €89.90, paid by Visa, owned by the logged-in customer",
+      "steps": [
+        "Log in as the order owner",
+        "Request a full refund"
+      ],
+      "expected": "Full refund of €89.90 to the original payment method (Visa); order status becomes Refunded"
+    },
+    {
+      "id": "TC-02",
+      "title": "Refund on day 30 after delivery is accepted",
+      "type": "boundary",
+      "preconditions": "Order delivered exactly 30 days ago",
+      "steps": [
+        "Request a full refund"
+      ],
+      "expected": "Refund is processed"
+    },
+    {
+      "id": "TC-03",
+      "title": "Refund on day 31 after delivery is rejected",
+      "type": "boundary",
+      "preconditions": "Order delivered 31 days ago",
+      "steps": [
+        "Request a full refund"
+      ],
+      "expected": "Rejected with 'Return window has closed'; no money moved"
+    },
+    {
+      "id": "TC-04",
+      "title": "Shipped order (not yet delivered) cannot be refunded",
+      "type": "negative",
+      "preconditions": "Order status Shipped",
+      "steps": [
+        "Request a full refund"
+      ],
+      "expected": "Refund option is not available; API rejects the request"
+    },
+    {
+      "id": "TC-05",
+      "title": "Cancelled order cannot be refunded",
+      "type": "negative",
+      "preconditions": "Order status Cancelled (payment voided)",
+      "steps": [
+        "Request a full refund"
+      ],
+      "expected": "Request rejected; order stays Cancelled"
+    },
+    {
+      "id": "TC-06",
+      "title": "Confirmation email shows the refund amount",
+      "type": "positive",
+      "preconditions": "Refund processed for #10045",
+      "steps": [
+        "Check the customer's inbox"
+      ],
+      "expected": "Email shows €89.90 and the payment method"
+    },
+    {
+      "id": "TC-07",
+      "title": "Duplicate request with the same request ID does not refund twice",
+      "type": "negative",
+      "preconditions": "Refund for #10045 already processed with request ID R-1",
+      "steps": [
+        "Send the refund request again with request ID R-1"
+      ],
+      "expected": "No second refund; API returns the original refund result"
+    },
+    {
+      "id": "TC-08",
+      "title": "Customer cannot refund another customer's order",
+      "type": "security",
+      "preconditions": "Order #10045 belongs to customer A",
+      "steps": [
+        "Log in as customer B",
+        "Call refund API for #10045"
+      ],
+      "expected": "403 Forbidden; no refund created"
+    },
+    {
+      "id": "TC-09",
+      "title": "Refund writes an audit log entry",
+      "type": "audit",
+      "preconditions": "Refund processed for #10045",
+      "steps": [
+        "Open the audit log"
+      ],
+      "expected": "Entry with who, when, amount €89.90 and reason"
+    },
+    {
+      "id": "TC-10",
+      "title": "Payment provider failure leaves the refund Failed",
+      "type": "integration",
+      "preconditions": "Payment provider returns an error",
+      "steps": [
+        "Request a full refund"
+      ],
+      "expected": "Refund status Failed, can be retried; customer is not told it succeeded"
+    }
+  ]
+}

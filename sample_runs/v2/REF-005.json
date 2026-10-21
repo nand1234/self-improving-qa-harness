@@ -1,0 +1,95 @@
+{
+  "story_id": "REF-005",
+  "test_cases": [
+    {
+      "id": "TC-01",
+      "title": "Percentage promo (20%): refund equals the discounted price paid",
+      "type": "positive",
+      "preconditions": "Item €50.00 bought with 20% off",
+      "steps": [
+        "Request full refund"
+      ],
+      "expected": "€40.00 refunded"
+    },
+    {
+      "id": "TC-02",
+      "title": "Fixed €10 promo is prorated across items for a partial refund",
+      "type": "positive",
+      "preconditions": "Order #50290: €40.00 + €60.00 with SAVE10",
+      "steps": [
+        "Refund the €40.00 item"
+      ],
+      "expected": "€36.00 refunded (€4.00 prorated discount)"
+    },
+    {
+      "id": "TC-03",
+      "title": "Refund never uses the list price for discounted items",
+      "type": "negative",
+      "preconditions": "Order #50290 with SAVE10",
+      "steps": [
+        "Refund the €60.00 item"
+      ],
+      "expected": "€54.00 refunded, not the €60.00 list price"
+    },
+    {
+      "id": "TC-04",
+      "title": "Order with 100% discount: no €0.00 refund is created",
+      "type": "boundary",
+      "preconditions": "Order fully covered by a 100% promo",
+      "steps": [
+        "Request refund"
+      ],
+      "expected": "No refund record created; customer told nothing is due"
+    },
+    {
+      "id": "TC-05",
+      "title": "Promo code is not reinstated after refund",
+      "type": "negative",
+      "preconditions": "Order #50290 refunded",
+      "steps": [
+        "Try to use SAVE10 on a new order"
+      ],
+      "expected": "Code is rejected as already used"
+    },
+    {
+      "id": "TC-06",
+      "title": "Prorated amounts are rounded to the cent",
+      "type": "data-integrity",
+      "preconditions": "Three items €33.33 each with €10 off",
+      "steps": [
+        "Refund one item"
+      ],
+      "expected": "Refund has 2 decimals and all refunds add up to the amount paid"
+    },
+    {
+      "id": "TC-07",
+      "title": "Total refunds on a discounted order cannot exceed the amount paid",
+      "type": "data-integrity",
+      "preconditions": "Order #50290 paid €90.00, €90.00 already refunded",
+      "steps": [
+        "Request another €1.00 via API"
+      ],
+      "expected": "Rejected: would exceed amount paid"
+    },
+    {
+      "id": "TC-08",
+      "title": "Refund confirmation shows the discount applied",
+      "type": "positive",
+      "preconditions": "Refund processed for #50290",
+      "steps": [
+        "Open the refund confirmation email"
+      ],
+      "expected": "Shows list price, discount and refunded amount"
+    },
+    {
+      "id": "TC-09",
+      "title": "Refund writes an audit log entry",
+      "type": "audit",
+      "preconditions": "Refund processed",
+      "steps": [
+        "Open the audit log"
+      ],
+      "expected": "Entry includes promo code and discount"
+    }
+  ]
+}
